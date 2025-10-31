@@ -1,0 +1,83 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f0f2f5;
+    margin: 0;
+    padding: 0;
+    color: #333;
+}
+
+/* --- Estilos del Encabezado --- */
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 20px 50px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    margin: 0;
+    font-size: 1.8em;
+}
+
+#logoutButton {
+    background-color: #dc3545;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s ease;
+}
+
+#logoutButton:hover {
+    background-color: #c82333;
+}
+
+/* --- Estilos del Contenedor Principal (Grid) --- */
+.grid-container {
+    display: grid;
+    /* Crea 3 columnas de igual ancho, con un mínimo de 300px por columna */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 50px;
+    max-width: 1200px;
+    margin: 0 auto; /* Centrar el contenedor */
+}
+
+/* --- Estilos de las Tarjetas de Producto --- */
+.card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    overflow: hidden; /* Asegura que la imagen no se desborde */
+    text-align: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+    transform: translateY(-5px); /* Pequeño efecto de elevación al pasar el ratón */
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+.card img {
+    width: 100%;
+    height: 200px; /* Altura fija para todas las imágenes */
+    object-fit: cover; /* Recorta la imagen para cubrir el área sin distorsionarla */
+    display: block;
+}
+
+.card h3 {
+    color: #007bff;
+    margin: 15px 0 10px;
+    font-size: 1.4em;
+}
+
+.card p {
+    padding: 0 15px 15px;
+    margin: 0;
+    color: #555;
+}

@@ -1,0 +1,71 @@
+<link rel="stylesheet" href="catalogo.css"> 
+
+<main class="grid-container">
+    <div class="card">
+        <img src="URL_DE_TU_IMAGEN" alt="Nombre del Producto">
+        <h3>Nombre del Producto</h3>
+        <p>Esta es una descripción detallada y atractiva.</p>
+    </div>
+    </main>
+<script>
+    const token = localStorage.getItem('authToken');
+    
+    // Función de protección inicial
+    if (!token) {
+        // Si no hay token, redirigir inmediatamente a la página de inicio de sesión
+        alert('Sesión expirada o no iniciada. Por favor, inicia sesión.');
+        window.location.href = 'index.html';
+    }
+
+    // Función para obtener y mostrar el catálogo
+    async function cargarCatalogo(authToken) {
+        try {
+            const response = await fetch('http://localhost:3000/api/catalogo', {
+                method: 'GET',
+                headers: {
+                    // ENVIAMOS EL TOKEN AL SERVIDOR
+                    'Authorization': `Bearer ${authToken}`
+                }
+            });
+
+            if (!response.ok) {
+                // Si el token es inválido (error 401/403), redirigimos a login
+                localStorage.removeItem('authToken');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            const data = await response.json();
+            const gridContainer = document.querySelector('.grid-container');
+            gridContainer.innerHTML = ''; // Limpiar cualquier contenido existente
+
+            // Recorrer los productos y crear las tarjetas HTML
+            data.productos.forEach(producto => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <img src="${producto.imagen}" alt="${producto.nombre}">
+                    <h3>${producto.nombre}</h3>
+                    <p>Precio: $${producto.precio}</p>
+                    <p>ID: ${producto.id}</p>
+                `;
+                gridContainer.appendChild(card);
+            });
+
+        } catch (error) {
+            console.error('Error al cargar el catálogo:', error);
+            // Mostrar un mensaje de error al usuario si falla la conexión
+            document.querySelector('.grid-container').innerHTML = '<p style="color: red;">Error al conectar con la API de productos.</p>';
+        }
+    }
+    
+    // Llamar a la función al cargar la página
+    cargarCatalogo(token);
+
+    // Lógica de Cerrar Sesión
+    document.getElementById('logoutButton').addEventListener('click', () => {
+        localStorage.removeItem('authToken'); // Borra el token
+        window.location.href = 'index.html'; // Redirige a la página de inicio de sesión
+    });
+
+</script>
